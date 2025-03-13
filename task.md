@@ -1,18 +1,23 @@
-# Task
+# 任務
 
-Implement a FastAPI-based proxy server that forwards requests to a model. The server should:
-1. Verify the presence of a `secret_key` in the POST request for authentication.
-2. Forward the request to the model and return the response directly.
-3. Handle concurrent requests efficiently using FastAPI's async capabilities.
+- [x] 設置 FastAPI 專案。
+- [x] 實作 `secret_key` 的請求驗證。
+- [x] 實作代理端點以轉發請求。
+- [ ] 測試伺服器以確保其正確處理請求。
 
-### Requirements
-- Use FastAPI for the backend server.
-- Verify `secret_key` in the POST request.
-- Forward requests to the model and return the response.
-- Handle different tasks' parsing logic via the `smarter_prompt` extension.
+實作一個基於 FastAPI 的代理伺服器來轉發請求到模型。伺服器應該：
+1. 驗證 POST 請求中的 `secret_key` 以進行身份驗證。
+2. 將請求轉發到模型並直接返回回應。
+3. 使用 FastAPI 的異步功能有效地處理並發請求。
 
-### Steps
-1. Set up a FastAPI project.
-2. Implement request validation for `secret_key`.
-3. Implement the proxy endpoint to forward requests.
-4. Test the server to ensure it handles requests correctly.
+### 要求
+- 使用 FastAPI 作為後端伺服器。
+- 驗證 POST 請求中的 `secret_key`。
+- 將請求轉發到模型並返回回應。
+- 通過 `smarter_prompt` 擴展處理不同任務的解析邏輯。
+
+### 步驟
+1. 設置 FastAPI 專案。
+2. 實作 `secret_key` 的請求驗證。
+3. 實作代理端點以轉發請求。
+4. 測試伺服器以確保其正確處理請求。
