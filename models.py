@@ -12,7 +12,6 @@ class Message(BaseModel):
     content: str = Field(description="Content of the message")
 
 class RequestModel(BaseModel):
-    secret_key: str
     base_url: str
     model: str
     messages: List[Message]

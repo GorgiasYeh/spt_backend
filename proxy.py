@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from auth import verify_secret_key
@@ -12,12 +13,13 @@ async def forward_request(request: Request):
     request_data = await request.json()
     request_model = RequestModel(**request_data)
 
-    client = OpenAI(api_key=request_model.secret_key, base_url=request_model.base_url)
+    client = OpenAI(api_key=os.getenv("API_KEY"), base_url=request_model.base_url)
     completion = client.beta.chat.completions.parse(
         model=request_model.model,
         messages=[message.model_dump() for message in request_model.messages],
-        response_format=ResponseModel
+        # response_format=ResponseModel
     )
 
-    improvement_result = completion.choices[0].message.parsed
-    return JSONResponse(content=improvement_result.model_dump())
+    # improvement_result = completion.choices[0].message.parsed
+    # return JSONResponse(content=improvement_result.model_dump())
+    return JSONResponse(content=completion.model_dump())
