@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8083:8000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - API_KEY=${API_KEY}
+    volumes:
+      - .:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
