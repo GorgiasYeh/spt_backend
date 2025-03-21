@@ -16,7 +16,7 @@ ai_config = AIConfig(
         "x-ai": AIServiceConfig(
             api_key=os.getenv("XAI_API_KEY", ""),
             base_url="https://api.x-ai.com/v1",
-            model="x-model-v1"
+            model="grok-2-latest"
         ),
         "gemini": AIServiceConfig(
             api_key=os.getenv("GEMINI_API_KEY", ""),
