@@ -44,7 +44,7 @@ async def forward_request(request: Request):
         raise HTTPException(status_code=500, detail=str(ve))
     except Exception as e:
         logger.error(f"連接錯誤: {str(e)}")
-        raise HTTPException(status_code=500, detail="API 連接失敗")
+        # raise HTTPException(status_code=500, detail="API 連接失敗")
 
         # 如果 XAI 發生問題，使用 Gemini 備援
         gemini_config = ai_config.services.get("gemini")
