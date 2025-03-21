@@ -22,14 +22,11 @@ This project implements a FastAPI-based proxy server that forwards requests to a
 - `POST /proxy`: Forwards the request to the model after verifying the `secret_key`.
 
 ## Example Request
-```json
+```bash
 curl --location 'http://127.0.0.1:8000/proxy/' \
 --header 'secret_key: your_secret_key' \
 --header 'Content-Type: application/json' \
 --data '{
-    "secret_key": "your_secret_key",
-    "base_url": "https://api.x.ai/v1",
-    "model": "grok-2-latest",
     "messages": [
         {
             "role": "system",
