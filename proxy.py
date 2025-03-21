@@ -4,6 +4,9 @@ from auth import verify_secret_key
 from models import RequestModel, ResponseModel
 from openai import OpenAI
 from AIConfig import ai_config
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -18,19 +21,31 @@ async def forward_request(request: Request):
     if not xai_config:
         raise HTTPException(status_code=500, detail="x-ai 配置未找到")
 
-    xai_client = OpenAI(
-        api_key=xai_config.api_key,
-        base_url=xai_config.base_url
-    )
-
     try:
+        if not xai_config.api_key:
+            raise ValueError("API key is empty")
+        
+        logger.info(f"使用 base_url: {xai_config.base_url}")
+        logger.info("API key 長度: " + str(len(xai_config.api_key)))
+        
+        xai_client = OpenAI(
+            api_key=xai_config.api_key,
+            base_url=xai_config.base_url
+        )
+
         completion = xai_client.beta.chat.completions.parse(
             model=xai_config.model,
             messages=[message.model_dump() for message in request_model.messages]
         )
         print(completion.model_dump())
         return JSONResponse(content=completion.model_dump())
+    except ValueError as ve:
+        logger.error(f"設定錯誤: {str(ve)}")
+        raise HTTPException(status_code=500, detail=str(ve))
     except Exception as e:
+        logger.error(f"連接錯誤: {str(e)}")
+        raise HTTPException(status_code=500, detail="API 連接失敗")
+
         # 如果 XAI 發生問題，使用 Gemini 備援
         gemini_config = ai_config.services.get("gemini")
         if not gemini_config:
